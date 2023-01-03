@@ -16,7 +16,7 @@ namespace BBC_Blackjack_Caitlin_Wright.Models
             foreach(Card card in Cards)
             {
                 Console.WriteLine(card.ToString());
-            }
+            } 
         }
 
         private void deckInit()
