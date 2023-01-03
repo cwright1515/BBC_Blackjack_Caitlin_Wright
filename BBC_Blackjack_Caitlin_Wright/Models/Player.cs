@@ -28,6 +28,11 @@ namespace BBC_Blackjack_Caitlin_Wright.Models
             return total;
         }
 
+        public int getPlayerNumber()
+        {
+            return playerNumber;
+        }
+
         public override string ToString()
         {
             return $"Player {playerNumber}";

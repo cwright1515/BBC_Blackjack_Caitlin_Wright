@@ -1,6 +1,4 @@
-﻿using BBC_Blackjack_Caitlin_Wright.Models;
-using BBC_Blackjack_Caitlin_Wright.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BBC_Blackjack_Caitlin_Wright
+namespace BBC_Blackjack_Caitlin_Wright.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameTable.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GameTable : UserControl
     {
-        public MainWindow()
+        public GameTable()
         {
             InitializeComponent();
         }
