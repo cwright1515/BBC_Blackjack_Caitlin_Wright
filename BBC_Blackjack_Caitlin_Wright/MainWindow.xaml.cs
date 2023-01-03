@@ -1,4 +1,5 @@
 ﻿using BBC_Blackjack_Caitlin_Wright.Models;
+using BBC_Blackjack_Caitlin_Wright.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace BBC_Blackjack_Caitlin_Wright
         public MainWindow()
         {
             InitializeComponent();
-            Deck deck = new Deck();
+            GameSimulation newGame = new GameSimulation();
         }
     }
 }

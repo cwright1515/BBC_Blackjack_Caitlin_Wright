@@ -8,18 +8,9 @@ namespace BBC_Blackjack_Caitlin_Wright.Models
 {
     public class Deck
     {
-        private List<Card> Cards;
-
-        public Deck()
-        {
-            deckInit();
-            foreach(Card card in Cards)
-            {
-                Console.WriteLine(card.ToString());
-            } 
-        }
-
-        private void deckInit()
+        public List<Card> Cards { get; set; }
+        
+        public void deckInit()
         {
             Cards = new List<Card>();
             foreach(Suit suit in Enum.GetValues(typeof(Suit)))

@@ -39,6 +39,11 @@ namespace BBC_Blackjack_Caitlin_Wright.Models
             }
         }
 
+        public int GetValue()
+        {
+            return value;
+        }
+
         public override string ToString()
         {
             return "Card is the " + label + " of " + suit.ToString();
