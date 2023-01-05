@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BBC_Blackjack_Caitlin_Wright" xmlns:views="clr-namespace:BBC_Blackjack_Caitlin_Wright.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <views:GameTable DataContext="{Binding CurrentViewModel}"/>
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" AllowsTransparency="True" Background="Transparent" WindowStyle="None">
+    <Border CornerRadius="0,0,300,300" BorderBrush="#35654d" BorderThickness="10" Padding="6" Background="#4f9e77">
+        <Grid>
+            <views:GameTable DataContext="{Binding CurrentViewModel}"/>
+        </Grid>
+    </Border>
+    
 </Window>

@@ -18,23 +18,22 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Blackjack Simulator"/>
+        <TextBlock Grid.Column="1" Grid.Row="0" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Blackjack Simulator"/>
 
         <StackPanel Grid.Column="1" Grid.Row="1">
-            <TextBlock Text="Dealer" HorizontalAlignment="Center"/> 
-            <ListView Width="400" Margin="10"  ItemsSource="{Binding DealerHand}" />
-            <TextBlock HorizontalAlignment="Center" Text="{Binding DealerTotal}"/> 
+            <TextBlock Text="Dealer" Foreground="White" HorizontalAlignment="Center"/>
+            <ListView Width="400" Margin="10" DataContext="{Binding Dealer}" ItemsSource="{Binding TextHand}" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="2">
-            <TextBlock Text="Player 1" HorizontalAlignment="Center"/> 
-            <ListView Width="400" Margin="10"  ItemsSource="{Binding PlayerHand}"/>
-            <TextBlock HorizontalAlignment="Center" Text="{Binding PlayerTotal}"/> 
+            <TextBlock Text="Player 1" Foreground="White" HorizontalAlignment="Center"/> 
+            <ListView Width="400" Margin="10" DataContext="{Binding Player1}" ItemsSource="{Binding TextHand}"/>
+            <TextBlock HorizontalAlignment="Center" Foreground="White" DataContext="{Binding Player1}" Text="{Binding Total}"/> 
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3">
-            <Button Grid.Column="1" Grid.Row="2" Height="90" Width="200" Margin="10" Command="{Binding HitCMD}" >Hit</Button>
-            <Button Grid.Column="1" Grid.Row="3"  Height="90" Width="200" Margin="10" Command="">Stand</Button>
+            <Button Grid.Column="1" Grid.Row="2" Height="60" Width="150" Margin="10" Command="{Binding HitCMD}">Hit</Button>
+            <Button Grid.Column="1" Grid.Row="3"  Height="60" Width="150" Margin="10" Command="{Binding StandCMD}">Stand</Button>
         </StackPanel>
     </Grid>
 </UserControl>

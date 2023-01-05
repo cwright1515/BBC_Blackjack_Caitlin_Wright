@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\GameSimulator.cs" />
+    <Compile Include="Models\Dealer.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="ViewModels\GameSimulationVM.cs" />

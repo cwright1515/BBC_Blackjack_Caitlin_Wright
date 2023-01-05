@@ -7,133 +7,142 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BBC_Blackjack_Caitlin_Wright.ViewModels
 {
     public class GameSimulationVM : ViewModelBase
     {
-        //private GameSimulator _simulator = new GameSimulator();
+        // GameSimulator _simulator = new GameSimulator();
+        #region Properties
+        
+        private Player player1;
 
-        private ObservableCollection<string> dealerHand;
-
-        public ObservableCollection<string> DealerHand
+        public Player Player1
         {
-            get { return dealerHand; }
+            get { return player1; }
             set 
             { 
-                dealerHand = value; 
-                OnPropertyChanged(nameof(dealerHand));
+                player1 = value;
+                OnPropertyChanged(nameof(Player1));
             }
         }
 
-        private ObservableCollection<string> playerHand;
+        private Player dealer;
 
-        public ObservableCollection<string> PlayerHand
+        public Player Dealer
         {
-            get { return playerHand; }
-            set 
-            { 
-                playerHand = value; 
-                OnPropertyChanged(nameof(playerHand));
+            get { return dealer; }
+            set { dealer = value;
+                OnPropertyChanged(nameof(Dealer));
+
             }
         }
 
 
-        private string playerTotal;
+        #endregion
 
-        public string PlayerTotal
-        {
-            get { return playerTotal; }
-            set 
-            { 
-                playerTotal = value;
-                OnPropertyChanged(nameof(playerTotal));
-            }
-        }
-
-        private string dealerTotal;
-
-        public string DealerTotal
-        {
-            get { return dealerTotal; }
-            set { dealerTotal = value;
-                OnPropertyChanged(nameof(dealerTotal));
-            }
-        }
-
-
-
-
-
+        #region Commands
         public RelayCommand HitCMD { get; }
 
-        public ICommand StandCMD { get; }
+        public ICommand StandCMD { get; } 
 
+        #endregion 
 
-
-
-        private Player dealer = new Player(0);
-        private List<Player> players = new List<Player>();
-        private Deck deck = new Deck();
-        Random r = new Random();
+        private Deck deck;
+        Random r;
 
         public GameSimulationVM()
         {
-            DealerHand = new ObservableCollection<string>();
-            PlayerHand = new ObservableCollection<string>();
-            HitCMD = new RelayCommand(func => deal(players[1]));
-            startGame(1);
+            HitCMD = new RelayCommand(func => deal(Player1));
+            StandCMD = new RelayCommand(func => stand(Player1));
+            startGame();
         }
 
 
-        private void startGame(int numberOfPlayers)
+        private void startGame()
         {
             // new deck at the start of each new game 
+            Dealer = new Dealer(0);
+            Player1 = new Player(1);
+            deck = new Deck();
+            r = new Random();
             deck.deckInit();
-            players.Add(dealer);
-
-            // set up to allow 1+ players
-            for (int i = 1; i < numberOfPlayers + 1; i++)
-            {
-                players.Add(new Player(i));
-            }
-
             initialDeal();
-
 
         }
 
         private void deal(Player player)
         {
             int rInt = r.Next(0, deck.Cards.Count);
-            player.Hand.Add(deck.Cards[rInt]);
-
-            if (player.getPlayerNumber() == 0)
-            {
-                DealerHand.Add(deck.Cards[rInt].ToString());
-            }
-            if (player.getPlayerNumber() != 0)
-            {
-                PlayerHand.Add(deck.Cards[rInt].ToString());
-            }
-
-            if (!(player.getPlayerNumber() == 0 && player.Hand.Count > 1))
-            {
-                Console.WriteLine($"{player.ToString()} has been dealt {deck.Cards[rInt]}");
-            }
+            player.deal(deck.Cards[rInt]);
             deck.Cards.RemoveAt(rInt);
-            PlayerTotal = $"Total: {player.getTotal()}";
+            if(player.Total > 21)
+            {
+                MessageBoxResult result = MessageBox.Show("Bust! Would you like to play again?", "Blackjack Simulator", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        startGame();
+                        break;
+                }
+                        
+            }
+        }
+
+        private void stand(Player player)
+        {
+            bool win; 
+            int playerRemainder;
+            int dealerRemainder;
+            if(player.Total < 22)
+            {
+                playerRemainder = 21 - player.Total;
+                dealerRemainder = 21 - Dealer.Total;
+                win = playerRemainder < dealerRemainder; 
+            }
+            else
+            {
+                win = false; 
+            }
+            endgame(win);
+        }
+
+        private void endgame(bool win)
+        {
+            if (win)
+            {
+                MessageBoxResult result = MessageBox.Show($"You won! The dealer had: {Dealer.Total}! Would you like to play again?", "Blackjack Simulator", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        startGame();
+                        break;
+                }
+            }
+            else
+            {
+                MessageBoxResult result = MessageBox.Show($"Bust! The dealer had: {Dealer.Total}! Would you like to play again?", "Blackjack Simulator", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        startGame();
+                        break;
+                }
+            }
         }
 
         private void initialDeal()
         {
-            deal(players[1]);
-            deal(players[0]);
-            deal(players[1]);
-            deal(players[0]);
-            PlayerTotal = $"Total: {players[1].getTotal()}";
-            DealerTotal = $"Total: {players[0].Hand[0].GetValue()}";
+            deal(Player1);
+            deal(Dealer);
+            deal(Player1);
+            deal(Dealer);
+            if(Player1.Total > 21)
+            {
+                startGame();
+            }
         }
 
     }
